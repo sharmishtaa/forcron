@@ -1,1 +1,0 @@
-PYTHONPATH='' luigi registersessions --module register_across_sessions_render_new --workers 4 --statetable /nas/data/M246930_Scnn1a_4/scripts/statetable_ribbon_3_session_3_section_64 --refsession 1 --owner M246930_Scnn1a

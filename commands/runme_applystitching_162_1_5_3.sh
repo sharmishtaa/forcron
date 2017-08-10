@@ -1,1 +1,0 @@
-PYTHONPATH='' luigi stitch_section --module stitching --workers 4 --statetablefile /nas2/data/S3_Run1_Rosie/scripts/statetable_ribbon_162_session_1_section_5 --ribbon 162 --section 5 --session 1 --channel 3 --owner S3_Run1
