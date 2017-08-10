@@ -2,7 +2,6 @@ import os
 import json
 import time
 
-#comments
 #Params to change
 #render params
 host = "ibs-forrestc-ux1"
@@ -30,7 +29,7 @@ project_root_dir = "/nas/data/M246930_Scnn1a"
 
 #test comments
 
-#parallelization params
+#parallelizatgit filter-branch -f --index-filter "git rm -rf --cached --ignore-unmatch FOLDERNAME" -- --allion params
 pool_size = 20
 
 #other
