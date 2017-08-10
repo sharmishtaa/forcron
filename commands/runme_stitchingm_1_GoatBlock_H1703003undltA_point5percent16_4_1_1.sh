@@ -1,0 +1,1 @@
+PYTHONPATH='' luigi stitch_section --module stitching --workers 4 --statetablefile /nas3/data/GoatBlock_H1703003undltA_point5percent/scripts/statetable_ribbon_16_session_1_section_4 --ribbon 16 --section 4 --session 1 --channel 1 --owner Goat_Block
