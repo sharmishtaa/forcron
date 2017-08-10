@@ -1,0 +1,1 @@
+python /data/array_tomography/ForSharmi/allen_SB_code/MakeAT/make_median.py  --inputDirectory /nas/data/M246930_Scnn1a_4/raw/data/Ribbon0003/session3/DAPI_3 --filepart S0046 --outputImage /nas/data/M246930_Scnn1a_4//processed/median/Median_DAPI_3_Section_0046_303000046000000.tif

@@ -1,0 +1,80 @@
+%% configure
+nfirst= 0;
+nlast = 694;
+
+% configure roughREGFLATDAPI_1_deconv
+rcrough.stack          = ['Rough_Aligned_68_to_112_DAPI_1_fullscale_CONS'];
+rcrough.owner          ='S3_Run1';
+rcrough.project        = 'S3_Run1_Jarvis';
+rcrough.service_host   = 'ibs-forrestc-ux1:8080';
+rcrough.baseURL        = ['http://' rcrough.service_host '/render-ws/v1'];
+rcrough.verbose        = 1;
+rcrough.renderbinPath  = '/pipeline/render/render-ws-java-client/src/main/scripts';
+
+% configure fine alignment
+rcfine.stack          = ['Fine_Aligned_68_to_112_DAPI_1_fullscale_params2'];
+rcfine.owner          ='S3_Run1';
+rcfine.project        = 'S3_Run1_Jarvis';
+rcfine.service_host    = 'ibs-forrestc-ux1:8080';
+rcfine.baseURL        = ['http://' rcrough.service_host '/render-ws/v1'];
+rcfine.verbose        = 1;
+rcfine.renderbinPath  = '/pipeline/render/render-ws-java-client/src/main/scripts';
+
+% configure point-matches
+
+pm1.server = 'http://ibs-forrestc-ux1:8080/render-ws/v1';
+pm1.owner = 'S3_Run1';
+pm1.match_collection = 'S3_Run1_Jarvis_68_to_112_DAPI_1_highres_2D';
+pm2.server = 'http://ibs-forrestc-ux1:8080/render-ws/v1';
+pm2.owner = 'S3_Run1';
+pm2.match_collection = 'S3_Run1_Jarvis_68_to_112_DAPI_1_highres_merged';
+
+
+%pm3.server = 'http://ibs-forrestc-ux1:8080/render-ws/v1';
+%pm3.owner = 'S3_Run1';
+%pm3.match_collection = 'S3_Run1_Jarvis_68_to_112_DAPI_1_highres_R3';
+%pm4.server = 'http://ibs-forrestc-ux1:8080/render-ws/v1';
+%pm4.owner = 'S3_Run1';
+%pm4.match_collection = 'S3_Run1_Jarvis_68_to_112_DAPI_1_highres_R4_s9';
+%pm5.server = 'http://ibs-forrestc-ux1:8080/render-ws/v1';
+%pm5.owner = 'S3_Run1';
+%pm5.match_collection = 'S3_Run1_Jarvis_68_to_112_DAPI_1_highres_R5_s7';
+%pm6.server = 'http://ibs-forrestc-ux1:8080/render-ws/v1';
+%pm6.owner = 'S3_Run1';
+%pm6.match_collection = 'S3_Run1_Jarvis_68_to_112_DAPI_1_highres_R6_s7';
+
+
+pm = [pm1,pm2]
+%pm=[pm1,pm2,pm3,pm4,pm5,pm6];
+opts.min_tiles = 20; % minimum number of tiles that constitute a cluster to be solved. Below this, no modification happens
+opts.degree = 1;    % 1 = affine, 2 = second order polynomial, maximum is 3
+opts.outlier_lambda = 1e2;  % large numbers result in fewer tiles excluded
+opts.solver = 'backslash';
+
+opts.matrix_only = 0;   % 0 = solve , 1 = only generate the matrix
+opts.distribute_A = 1;  % # shards of A
+opts.dir_scratch = '/pipeline/scratch';
+
+opts.min_points = 5;
+opts.max_points = 20;
+opts.nbrs = 5;
+opts.xs_weight = 1/2;
+opts.stvec_flag = 1;   % 0 = regularization against rigid model (i.e.; starting value is not supplied by rc)
+opts.distributed = 0;
+
+%opts.lambda = .1*10.^(-1);
+%opts.edge_lambda = .1* 10^(-1);
+
+
+opts.lambda = .1*10.^(-1);
+opts.edge_lambda = .1* 10^(-1);
+
+
+opts.verbose = 1;
+opts.debug = 0;
+opts.disableValidation = 1;
+[mL, err] =  system_solve(nfirst, nlast, rcrough, pm, opts, rcfine);  %%% fast solve and ingest
+
+%%% alternatively use: (uncomment)
+
+% [mL, pm_mx, err, R, ~, ntiles, PM, sectionId_load, z_load] = solve_slab(rcrough, pm, nfirst, nlast, rcfine, opts);

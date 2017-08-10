@@ -12,6 +12,9 @@ sys.path.insert(0,'/data/array_tomography/ForSharmi/allen_SB_code/celery/')
 from celery import Celery
 from tasks import run_celerycommand
 
+
+#test comments
+#test
 def parseprojectroot(projectdirectory):
 	print projectdirectory
 	tok = projectdirectory.split("/")
@@ -46,7 +49,7 @@ def parsefile(fname):
 		session = int(sessiondir[7:])
 
 		return [projectdirectory, ribbon, session, section, owner,fullline]
-		
+
 def get_channel_nums(statetablefile):
 	df=pd.read_csv(statetablefile)
 	uniq_ch=df.groupby(['ch']).groups.keys()
@@ -88,7 +91,7 @@ if __name__ == '__main__':
 	print cmd
 	os.system(cmd)
 	print "......................................................."
-	
+
 	#run create_fast_stacks
 	dcmd = "docker exec renderapps python append_fast_stacks.py "
 	dcmd = dcmd + "--render.host ibs-forrestc-ux1 "
@@ -103,7 +106,7 @@ if __name__ == '__main__':
 	dcmd = dcmd + " --render.owner %s "%owner
  	print dcmd
 	os.system(dcmd)
-	
+
 	#save to disk for QC and post to slack channel
 	outputdir = "%s/processed/QC"%projectdirectory
 	outputfile = "Ribbon_%s_Session_%s_Section_%s.jpeg"%(ribbon,session,section)
@@ -118,18 +121,18 @@ if __name__ == '__main__':
 	wcmd = wcmd + "--outfile %s/%s "%(outputdir,outputfile)
 	wcmd = wcmd + "--slackchannel qc_nas1 "
 	wcmd = wcmd + "--owner %s "%owner
-	
+
 
 	print wcmd
 	os.system(wcmd)
-	
-	
+
+
 	#run stitching
-	allchans = get_channel_nums(statetablefile) 
+	allchans = get_channel_nums(statetablefile)
 	print allchans
 
 	statetablefile = statetablefile.replace('//','/')
-	
+
 	#for channelnum in allchans:
 	for channelnum in range (0,1):
 		scmd = "PYTHONPATH='' luigi stitch_section --module stitching --workers 4 "
@@ -140,7 +143,7 @@ if __name__ == '__main__':
 		scmd = scmd + "--channel %d "%channelnum
 		scmd = scmd + "--owner %s"%owner
 		print scmd
-		
+
 		waitcmd = "docker exec luigiscripts python /pipeline/luigi-scripts/wait_30_mins.py\n"
 		fname = "/pipeline/luigi-scripts/runme_stitching1_%d.sh"%channelnum
 		f = open(fname,"w")
@@ -148,10 +151,9 @@ if __name__ == '__main__':
 			f.write(waitcmd)
 		f.write(scmd)
 		f.close()
-		
+
 		rcmd = "docker exec luigiscripts sh /pipeline/luigi-scripts/runme_stitching1_%d.sh"%channelnum
 		print rcmd
 		#os.system(rcmd)
 		result = run_celerycommand.apply_async(args=[rcmd,os.getcwd()])
 		#time.sleep(10)
-		
