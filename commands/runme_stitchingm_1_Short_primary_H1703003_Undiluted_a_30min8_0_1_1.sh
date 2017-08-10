@@ -1,0 +1,1 @@
+PYTHONPATH='' luigi stitch_section --module stitching --workers 4 --statetablefile /nas3/data/Short_primary_H1703003_Undiluted_a_30min/scripts/statetable_ribbon_8_session_1_section_0 --ribbon 8 --section 0 --session 1 --channel 1 --owner Shorter_Primary

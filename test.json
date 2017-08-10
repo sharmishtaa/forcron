@@ -1,0 +1,11 @@
+{
+	"input_stack": "Stitched_DAPI_1_Lowres_62_to_67",
+	"output_stack" : "Stitched_DAPI_1_Lowres_62_to_67_RoughAlign",
+	"pointmatch_collection" : "S3_Run1_Igor_62_to_67_lowres",
+	"nfirst": 0,
+	"nlast": 93,
+	"host":"ibs-forrestc-ux1:8080",
+	"client_scripts":"/pipeline/render/render-ws-java-client/src/main/scripts",
+	"owner": "S3_Run1",
+	"project" : "S3_Run1_Igor"
+}
