@@ -67,10 +67,9 @@ applych_str = "--prealigned_stack %s --lowres_stack %s --tilespec_directory %s -
 
 
 #downsample DAPI
-#added downsample 
+#added downsample
 cmd_drop = "%s python -m renderapps.stitching.detect_and_drop_stitching_mistakes %s %s %s"%(d_str,render_str, project_str, dropstitchmistakes_str)
 print cmd_drop
-#print cmd
 #os.system(cmd_drop)
 #exit(0)
 
