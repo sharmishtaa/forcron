@@ -25,7 +25,7 @@ channelnames = ["DAPI_1"]
 #channelnames = ["GFP"]
 
 #directories
-project_root_dir = "/nas4/data/S3_Run1_Jarvis"
+project_root_dir = "/nas/data/M246930_Scnn1a"
 
 #parallelization params
 pool_size = 20
@@ -52,7 +52,7 @@ numsectionsfile = "%s/numsections"%downsample_dir
 #stacks
 #lowres_stack = "Stitched_DAPI_1_Lowres_%d_to_%d"%(firstribbon,lastribbon)
 lowres_stack = "Stitched_DAPI_1_Lowres"
-lowres_roughalign_stack = "Stitched_DAPI_1_Lowres_RoughAlign_3"
+lowres_roughalign_stack = "Stitched_DAPI_1_Lowres_RoughAlign_1"
 lowres_pm_collection = "%s_%d_to_%d_DAPI_1_lowres" %(project,firstribbon,lastribbon)
 
 #docker string
@@ -62,20 +62,6 @@ project_str = "--render.project %s --render.owner %s" %(project, owner)
 dropstitchmistakes_str = "--prestitchedStack %s --poststitchedStack %s --outputStack %s --jsonDirectory %s --edge_threshold %d --pool_size %d --distance_threshold %d"%(acquisition_Stack,stitched_dapi_Stack,dropped_dapi_Stack,dropped_dir,edge_threshold,pool_size,distance)
 downsample_str = "--input_stack %s --output_stack %s --image_directory %s --pool_size %d --scale %f --minZ %d --maxZ %d --numsectionsfile %s"%(dropped_dapi_Stack,lowres_stack,downsample_dir,pool_size,scale,firstribbon*100, ((lastribbon+1)*100 - 1), numsectionsfile)
 applych_str = "--prealigned_stack %s --lowres_stack %s --tilespec_directory %s --pool_size %d --scale %f"%(dropped_dapi_Stack, lowres_roughalign_stack, roughalign_ts_dir, pool_size, scale)
-
-#copy dropped stitched files for all channels
-
-copy_cmd = d_str + "python -m renderapps.stack.concatenate_stacks " + render_str
-copy_cmd = copy_cmd + "--input_stacks 	Stitched_DAPI_1_dropped,Stitched_DAPI_1_dropped,Stitched_DAPI_1_dropped "
-copy_cmd = copy_cmd + "--input_projects  S3_Run1_Igor,S3_Run1_Jarvis,S3_Run1_Rosie"
-copy_cmd = copy_cmd + "--output_stack  Stitched_DAPI_1_dropped"
-copy_cmd = copy_cmd + "--output_project S3_Run1_Master "
-copy_cmd = copy_cmd + "--output_directory /nas4/data/S3_Run1_Jarvis/processed/tilespecs_concatenate_stitched "
-copy_cmd = copy_cmd + "--adjust_z False "
-copy_cmd = copy_cmd + "--pool_size 20 "
-print copy_cmd
-#os.system(copy_cmd)
-exit(0)
 
 
 #downsample DAPI

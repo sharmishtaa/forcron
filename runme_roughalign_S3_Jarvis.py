@@ -3,7 +3,7 @@ import json
 import time
 
 #Params to change
-#render params 
+#render params
 host = "ibs-forrestc-ux1"
 client_scripts = "/var/www/render/render-ws-java-client/src/main/scripts"
 port = 8080
@@ -28,7 +28,7 @@ channelnames = ["DAPI_1"]
 pm_script_dir = "/data/array_tomography/ForSharmi/sharmirender/render/render-ws-spark-client/src/main/scripts"
 project_root_dir = "/nas4/data/S3_Run1_Jarvis"
 
-#parallelization params 
+#parallelization params
 pool_size = 20
 
 #other
@@ -50,6 +50,7 @@ numsectionsfile = "%s/numsections"%downsample_dir
 
 
 #stacks
+#test
 lowres_stack = "Stitched_DAPI_1_Lowres_%d_to_%d"%(firstribbon,lastribbon)
 lowres_roughalign_stack = "Stitched_DAPI_1_Lowres_%d_to_%d_RoughAlign_filter1_round1111"%(firstribbon,lastribbon)
 lowres_pm_collection = "%s_%d_to_%d_DAPI_1_lowres" %(project,firstribbon,lastribbon)
