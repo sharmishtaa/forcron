@@ -3,7 +3,7 @@ import json
 import time
 
 #Params to change
-#render params 
+#render params
 host = "ibs-forrestc-ux1"
 client_scripts = "/var/www/render/render-ws-java-client/src/main/scripts"
 port = 8080
@@ -26,12 +26,12 @@ dropped_dapi_Stack = "Stitched_DAPI_%s_dropped"%session
 pm_script_dir = "/data/array_tomography/ForSharmi/sharmirender/render/render-ws-spark-client/src/main/scripts"
 project_root_dir = "/nas/data/M246930_Scnn1a_4"
 
-#parallelization params 
+#parallelization params
 pool_size = 20
 
 #other
 distance = 50
-edge_threshold = 1843
+edge_threshold = 2000
 scale = 0.05
 deltaZ = 10
 
@@ -63,17 +63,17 @@ dropstitchmistakes_str = "--prestitchedStack %s --poststitchedStack %s --outputS
 #drop stitching mistakes
 cmd_drop = "%s python -m renderapps.stitching.detect_and_drop_stitching_mistakes %s %s %s"%(d_str,render_str, project_str, dropstitchmistakes_str)
 print cmd_drop
-#os.system(cmd_drop)
-#exit(0)
+os.system(cmd_drop)
+exit(0)
 
 
 
 for ribnum in range(1,4):
-	
+
 	for sec in range(0,65):
-			
+
 		for sessnum in range(2,4):
-			
+
 			print ribnum
 			print sec
 			print sessnum
@@ -83,14 +83,14 @@ for ribnum in range(1,4):
 			#scmd = scmd + "--refsession 1 "
 			#scmd = scmd + "--owner SC_MT_IUE1_2"
 			#print scmd
-			
+
 			scmd = "PYTHONPATH='' luigi registersessions --module register_across_sessions_render_new --workers 4 "
 			scmd = scmd + "--statetable %s/scripts/statetable_ribbon_%d_session_%d_section_%d "%(project_root_dir,ribnum,sessnum,sec)
 			scmd = scmd + "--refsession 1 "
 			scmd = scmd + "--owner %s"%owner
 			print scmd
-			
-									 
+
+
 
 			fname = "/pipeline/forcron/commands/runme_register.sh"
 			f = open(fname,"w")
