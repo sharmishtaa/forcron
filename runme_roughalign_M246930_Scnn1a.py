@@ -75,16 +75,17 @@ applych_str = "--prealigned_stack %s --lowres_stack %s --tilespec_directory %s -
 #downsample
 cmd_downsample = "%s python -m renderapps.materialize.make_downsample_image_stack %s %s %s"%(d_str,render_str,project_str,downsample_str)
 print cmd_downsample
-os.system(cmd_downsample)
-exit(0)
+#os.system(cmd_downsample)
+#exit(0)
 
 #Extract point matches
 ##cmd_pointmatches = "sh %s/run_tilepair_and_sift.sh --owner %s --project %s --stack %s --minZ 0 --maxZ %d --collection %s --deltaZ %d"%(pm_script_dir,owner,project,lowres_stack, 2090, lowres_pm_collection,deltaZ)
-cmd_pointmatches = "sh %s/run_tilepair_and_sift.sh --owner %s --project %s --stack %s --minZ 0 --maxZ 2089 --collection S3_Run1_Master_DAPI_1_lowres_round2 --deltaZ %d"%(pm_script_dir,owner,project,lowres_stack,deltaZ)
+cmd_pointmatches = "sh %s/run_tilepair_and_sift.sh --owner %s --project %s --stack %s --minZ 0 --maxZ 173 --collection M246930_Scnn1a_4_DAPI_1_lowres_round1 --deltaZ %d"%(pm_script_dir,owner,project,lowres_stack,deltaZ)
 cmd_pointmatches = cmd_pointmatches + " --renderScale 1.0 --SIFTminScale 0.5 --SIFTmaxScale 1.0 --SIFTsteps 7"
 print cmd_pointmatches
-#os.system(cmd_pointmatches)
-#exit(0)
+os.system(cmd_pointmatches)
+exit(0)
+
 #Manual Step:
 #Use ipython notebook at: ibs-forrestc-ux1:8888 -> old_notebooks -> create_pointmatches.ipynb to create matches in a collection called :
 #S3_Run1_Master_DAPI_1_Manual
