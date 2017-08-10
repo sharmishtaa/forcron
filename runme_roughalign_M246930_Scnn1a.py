@@ -27,6 +27,8 @@ channelnames = ["DAPI_1"]
 #directories
 project_root_dir = "/nas/data/M246930_Scnn1a"
 
+#test comments
+
 #parallelization params
 pool_size = 20
 
